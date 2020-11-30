@@ -22,23 +22,40 @@ cd so5-example-vcpkg
 
 ### Obtaining the dependencies
 
-so5-example-vcpkg uses SObjectizer so it should be obtained via vcpkg:
+so5-example-vcpkg uses SObjectizer in the form of a static library so it should be obtained via vcpkg. For Linux:
 
 ```sh
 vcpkg install sobjectizer
 ```
 
+and for Windows (in 64-bit mode):
+
+```sh
+vcpkg install sobjectizer:x64-windows-static-md
+```
+
 ### Building
 
-The build of so5-example-vcpkg is performed via CMake. Please note the usage of vcpkg's toolchain file:
+The build of so5-example-vcpkg is performed via CMake. Please note the usage of vcpkg's toolchain file.
+
+Building for Linux:
 
 ```sh
 cd so5-example-vcpkg
 mkdir cmake_build
 cd cmake_build
 cmake -DCMAKE_TOOLCHAIN_FILE=<path-to-your-vcpkg>/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=target .
-cmake --build .
-cmake --build . --target install
+cmake --build . --target install --config Release
+```
+
+Building for Windows (note the usage of VCPKG_TARGET_TRIPLET):
+
+```sh
+cd so5-example-vcpkg
+mkdir cmake_build
+cd cmake_build
+cmake -DCMAKE_TOOLCHAIN_FILE=<path-to-your-vcpkg>/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows-static-md -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=target .
+cmake --build . --target install --config Release
 ```
 
 Executable file(s) will be placed in `target/bin` subfolder.
